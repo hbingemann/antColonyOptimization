@@ -21,8 +21,8 @@ class Ant:
         desirabilities = []
         for unvisited_city in unvisited_cities:
             # get the variables for the equation
-            pheromones_on_path = pheromones[CITIES.index(current_city)][CITIES.index(unvisited_city)]
-            path_shortness_value = 1 / DISTANCES[CITIES.index(current_city)][CITIES.index(unvisited_city)]
+            pheromones_on_path = pheromones[CITIES.get_index(current_city)][CITIES.get_index(unvisited_city)]
+            path_shortness_value = 1 / DISTANCES[CITIES.get_index(current_city)][CITIES.get_index(unvisited_city)]
             # calculate desirability equation
             desirability = math.pow(pheromones_on_path, A) * math.pow(path_shortness_value, B)
             desirabilities.append(desirability)
@@ -42,12 +42,12 @@ class Ant:
         going_on_route = True
         while going_on_route:
             route.add(self.choose_next_city(route, pheromones))
-            if route.get_city_count() == len(CITIES):
+            if route.get_city_count() == CITIES.get_city_count():
                 # visited every city
                 going_on_route = False
         # calculate where pheromones are dropped
         for city1, city2 in route.loop_through_paths():
-            city1_index, city2_index = CITIES.index(city1), CITIES.index(city2)
+            city1_index, city2_index = CITIES.get_index(city1), CITIES.get_index(city2)
             dropped_pheromones[city1_index][city2_index] = \
                 dropped_pheromones[city2_index][city1_index] = \
                 1 / route.get_length()

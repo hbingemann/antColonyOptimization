@@ -6,7 +6,7 @@ from constants import CITIES
 class Route:
 
     def __init__(self, cities=None):
-        self.cities = cities
+        self.cities = cities  # list of cities
         if self.cities is None:
             self.reset()  # reset the route if nothing was added
 
@@ -22,7 +22,7 @@ class Route:
         self.cities.append(city)
 
     def reset(self):
-        self.cities = [CITIES[0]]
+        self.cities = [CITIES.get_first()]
 
     def get(self, index):
         return self.cities[index]
@@ -37,7 +37,7 @@ class Route:
         return self.get(-1)  # last item is current city
 
     def has_completed_route(self):
-        return self.get_city_count() >= len(CITIES)
+        return self.get_city_count() >= CITIES.get_city_count()
 
     def loop_through_paths(self):
         assert self.has_completed_route(), "Can't loop through the paths of an incomplete route"

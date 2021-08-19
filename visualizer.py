@@ -10,9 +10,9 @@ class ShortestRouteVisualizer:
 
     def __init__(self):
         self.screen = pygame.display.set_mode(SCREEN_SIZE)
-        self.shortest_route = Route(CITIES)  # default route is just whatever order the cities are in
+        self.shortest_route = Route(CITIES.get_city_list())  # default route is just whatever order the cities are in
         # initialize grid
-        self.grid_width = np.amax(CITIES)
+        self.grid_width = np.amax(CITIES.get_city_list())
         self.grid_height = self.grid_width
         self.grid_dimensions = self.grid_width, self.grid_height
         # initialize fonts
@@ -47,7 +47,7 @@ class ShortestRouteVisualizer:
         assert len(texts) <= MAX_NUMBER_OF_INFO_TEXTS, "Tried to display too many texts"
         for text_number, text in enumerate(texts):
             text_surface = self.font.render(text, True, TEXT_COLOR)
-            text_position = SCREEN_WIDTH - (text_surface.get_width() + 100), 50 + 50 * text_number
+            text_position = SCREEN_WIDTH - (text_surface.get_width() + 100), 50 + (FONT_SIZE + 10) * text_number
             self.screen.blit(text_surface, text_position)
 
     @staticmethod
