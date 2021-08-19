@@ -1,0 +1,38 @@
+Info:
+- path is one location to another
+- route is all the paths to go by every location
+
+procedure ACO_MetaHeuristic is
+while run do
+    generateSolutions()  --> ants go on some route
+    daemonActions()      --> optional (won't need for this)
+    pheromoneUpdate()    --> do the pheromone update (evaporation)
+repeat
+end procedure
+
+
+Pheromone update (evaporation):
+p = pheromone evaporation constant
+t = pheromone on path from before ants
+f = updated pheromone on path
+
+f = (1 - p)t + pheromone on path that ants just dropped
+
+
+Pheromone left behind on each path visited:
+l = length of the ants route
+pheromone left behind on each path = 1 / l
+
+
+Probability of choosing certain path:
+p = probability of going on the path
+t = total pheromones on path
+n = 1/cost (length) of path
+a and b are constants -- a values high pheromone levels and b values short paths
+total = the total of the equation (t^a * n^b) for all possible paths the ant could go on
+
+p = (t^a * n^b) / total
+
+
+Notes:
+- need a matrix for all the paths (costs (length), pheromones)
