@@ -5,9 +5,9 @@ import pygame.font
 
 # Algorithm constants
 A = 1  # values high amounts of pheromones on paths
-B = 1  # values shorter paths
-P = 0.5  # pheromone evaporation constant
-NUM_ANTS = 10
+B = 5  # values shorter paths
+P = 0.6  # pheromone evaporation constant
+W = 0.1  # wandering, chance that ant will pick a random city
 
 # Program constants
 CITIES = list({
@@ -17,6 +17,9 @@ CITIES = list({
     (6, 6), (9, 2), (5, 7),
     (9, 9), (2, 7), (3, 5)})
 NUM_CITIES = len(CITIES)
+
+# setting the number of ants to the number of cities is most reliable
+NUM_ANTS = NUM_CITIES
 
 # pygame things
 MAX_FPS = 60

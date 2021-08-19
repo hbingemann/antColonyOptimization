@@ -34,5 +34,5 @@ total = the total of the equation (t^a * n^b) for all possible paths the ant cou
 p = (t^a * n^b) / total
 
 
-Notes:
-- need a matrix for all the paths (costs (length), pheromones)
+Considerations for future:
+    - wandering variable

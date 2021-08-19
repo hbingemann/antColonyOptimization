@@ -1,7 +1,7 @@
 import math
 
 from route import Route
-from constants import CITIES, A, B, DISTANCES
+from constants import CITIES, A, B, W, DISTANCES
 import numpy as np
 
 
@@ -12,6 +12,9 @@ class Ant:
 
     def choose_next_city(self, route, pheromones):
         unvisited_cities = [city for city in CITIES if not route.has_visited_city(city)]
+        # check wandering first
+        if np.random.random_sample() < W:
+            return unvisited_cities[np.random.randint(0, len(unvisited_cities))]
         current_city = route.get_current_city()
         # calculate the desirability of each path and the total desirability
         total_desirability = 0
