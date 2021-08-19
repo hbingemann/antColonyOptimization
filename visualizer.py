@@ -18,7 +18,7 @@ class ShortestRouteVisualizer:
         # initialize fonts
         self.font = pygame.font.Font(FONT, FONT_SIZE)
 
-    def visualize(self, routes):
+    def visualize(self, routes, iterations):
 
         # check if there was a new shortest route
         for route in routes:
@@ -28,6 +28,9 @@ class ShortestRouteVisualizer:
         self.screen.fill((20, 20, 20))  # dark grey
         self._visualize_cities()
         self._visualize_shortest_route()
+        # display the text
+        self._display_texts(f"Path Length: {round(self.shortest_route.get_length(), 3)}",
+                            f"Iteration: {iterations}")
 
     def _visualize_cities(self):
         # make a circle at each city location
@@ -39,11 +42,13 @@ class ShortestRouteVisualizer:
         for path in self.shortest_route.loop_through_paths():
             city1, city2 = [ShortestRouteVisualizer.get_city_visual_coordinates(_city) for _city in path]
             pygame.draw.line(self.screen, ROUTE_COLOR, city1, city2, width=ROUTE_WIDTH)
-        # display some text to show the length of the shortest path
-        shortest_path_text = f"Current Shortest Path Length: {round(self.shortest_route.get_length(), 3)}"
-        shortest_path_surface = self.font.render(shortest_path_text, True, TEXT_COLOR)
-        text_position = SCREEN_WIDTH - (shortest_path_surface.get_width() + 100), 50
-        self.screen.blit(shortest_path_surface, text_position)
+
+    def _display_texts(self, *texts):
+        assert len(texts) <= MAX_NUMBER_OF_INFO_TEXTS, "Tried to display too many texts"
+        for text_number, text in enumerate(texts):
+            text_surface = self.font.render(text, True, TEXT_COLOR)
+            text_position = SCREEN_WIDTH - (text_surface.get_width() + 100), 50 + 50 * text_number
+            self.screen.blit(text_surface, text_position)
 
     @staticmethod
     def get_city_visual_coordinates(city_graph_coords):

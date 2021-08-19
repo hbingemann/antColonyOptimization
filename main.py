@@ -8,6 +8,7 @@ from visualizer import ShortestRouteVisualizer
 
 def main():
     pheromones = np.ones(shape=DISTANCES.shape)
+    iterations = 0
 
     # create some ants
     ants = []
@@ -42,8 +43,11 @@ def main():
         for dropped_pheromones in pheromone_drops:
             pheromones += dropped_pheromones
 
+        # increase iterations
+        iterations += 1
+
         # display
-        visualizer.visualize(routes)
+        visualizer.visualize(routes, iterations)
         # make some text here that says calculating because we will be calculating the next routes
         #   before the next display occurs
         pygame.display.update()
