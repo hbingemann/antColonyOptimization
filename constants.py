@@ -6,8 +6,8 @@ import pygame.font
 # Algorithm constants
 A = 1  # values high amounts of pheromones on paths
 B = 1  # values shorter paths
-P = 1  # pheromone evaporation constant
-NUM_ANTS = 5
+P = 0.5  # pheromone evaporation constant
+NUM_ANTS = 10
 
 # Program constants
 CITIES = list({

@@ -33,12 +33,19 @@ class Ant:
         choice = np.random.choice([i for i in range(len(unvisited_cities))], p=probabilities)
         return unvisited_cities[choice]
 
-    def calculate_route(self, pheromones):
+    def travel(self, pheromones):
         route = Route()
+        dropped_pheromones = np.zeros(shape=pheromones.shape)
         going_on_route = True
         while going_on_route:
             route.add(self.choose_next_city(route, pheromones))
             if route.get_city_count() == len(CITIES):
                 # visited every city
                 going_on_route = False
-        return route
+        # calculate where pheromones are dropped
+        for city1, city2 in route.loop_through_paths():
+            city1_index, city2_index = CITIES.index(city1), CITIES.index(city2)
+            dropped_pheromones[city1_index][city2_index] = \
+                dropped_pheromones[city2_index][city1_index] = \
+                1 / route.get_length()
+        return route, dropped_pheromones

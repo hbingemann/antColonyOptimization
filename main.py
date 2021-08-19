@@ -2,12 +2,12 @@ import numpy as np
 import pygame
 
 from ant import Ant
-from constants import NUM_CITIES, NUM_ANTS, MAX_FPS
+from constants import DISTANCES, NUM_ANTS, MAX_FPS, P
 from visualizer import ShortestRouteVisualizer
 
 
 def main():
-    pheromones = np.ones(shape=(NUM_CITIES, NUM_CITIES))
+    pheromones = np.ones(shape=DISTANCES.shape)
 
     # create some ants
     ants = []
@@ -29,10 +29,18 @@ def main():
 
         # calculate ant routes
         routes = []
+        pheromone_drops = []
         for ant in ants:
-            routes.append(ant.calculate_route(pheromones))
+            route, dropped_pheromones = ant.travel(pheromones)
+            routes.append(route)
+            pheromone_drops.append(dropped_pheromones)
 
-        # update pheromones here
+        # pheromone evaporation
+        pheromones *= np.full(shape=pheromones.shape, fill_value=1-P)
+
+        # add pheromones that the ants dropped
+        for dropped_pheromones in pheromone_drops:
+            pheromones += dropped_pheromones
 
         # display
         visualizer.visualize(routes)
